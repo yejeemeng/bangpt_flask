@@ -2,6 +2,7 @@ from flask import Flask
 from pymongo import MongoClient
 from user import User_bp
 from participants import Participants_bp
+from diary import Diary_bp
 from Community.freepost import FreePost_bp
 from Community.infopost import InfoPost_bp
 from Community.questionpost import QuestionPost_bp
@@ -22,6 +23,7 @@ db = client.capstone_design
 
 app.register_blueprint(User_bp, url_prefix='/user')
 app.register_blueprint(Participants_bp, url_prefix='/participants')
+app.register_blueprint(Diary_bp, url_prefix='/diary')
 
 app.register_blueprint(FreePost_bp, url_prefix='/freepost')
 app.register_blueprint(FreeComment_bp, url_prefix='/freecomment')

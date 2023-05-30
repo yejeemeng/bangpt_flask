@@ -6,7 +6,8 @@ from bson.json_util import dumps
 #--------------------------------------------------------------------------------------------------------------------#
 client = MongoClient("mongodb://localhost:27017/hyeyeon?retryWrites=true&w=majority")
 db = client.capstone_design
-Users = db['user'] # 자유 게시판
+Users = db['user'] # 유저 정보 관리하는 컬렉션
+User_Badges = db['user_badge'] # 유저의 배지 관리 
 User_bp = Blueprint('user', __name__)
 #--------------------------------------------------------------------------------------------------------------------#
 
@@ -33,6 +34,9 @@ def join_user():
         # MongoDB에 추가
         Users.insert_one(user)
         response = {'success': True}
+        
+    user_document = {'user_id': user_id, 'badges': []}
+    User_Badges.insert_one(user_document)
 
     return jsonify(response)
 

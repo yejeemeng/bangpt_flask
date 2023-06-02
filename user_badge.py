@@ -33,21 +33,20 @@ def update_attendance(user_id):
     
     
 # 유저의 배지 정보 가져오기
-@User_Badge_bp.route('/badges', methods=['POST'])
-def get_user_badges():
+@User_Badge_bp.route('/badges/<userid>', methods=['POST'])
+def get_user_badges(userid):
     try:
-        user_id = request.form['userID']
-        user_document = User_Badges.find_one({'user_id': user_id})
+        user_document = User_Badges.find_one({'user_id': userid})
         
         if user_document:
             badges = user_document['badges']
-            return jsonify(badges)
+            return jsonify({'badges': badges})
         else:
-            return jsonify([])
+            return jsonify({'badges': []})
     
     except Exception as e:
         print(e)
-        return jsonify([])
+        return jsonify({'badges': []})
     
 
 # 조건에 따라 유저 배지 추가하기

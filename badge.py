@@ -21,7 +21,7 @@ def add_badge():
     try:
         badge_name = request.form['badge_name']
         badge_desc = request.form['badge_desc']
-        badge_image_url = request.files['badge_image_url']
+        badge_image_url = request.form['badge_image_url']
 
         # 배지 번호 카운트
         badge_num = Badgelist.count_documents({}) + 1
@@ -30,8 +30,7 @@ def add_badge():
             'num': badge_num,
             'badge_name': badge_name,
             'badge_desc': badge_desc,
-            'badge_image' : badge_image_url.filename,
-            'badge_image' : badge_image_url.read()
+            'badge_image_url' : badge_image_url,
         }
 
         Badgelist.insert_one(badge)  # MongoDB에 데이터 삽입
@@ -52,17 +51,18 @@ def update_badge(num):
 
     badge_name = request.form.get('badge_name', badge['badge_name'])
     badge_desc = request.form.get('badge_desc', badge['badge_desc'])
-    badge_image_url = request.files['badge_image_url']
+    badge_image_url = request.form.get('badge_image_url', badge['badge_image_url'])
 
     # 업로드된 파일 저장
-    if badge_image_url:
-        filename = badge_image_url.filename
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        badge_image_url.save(file_path)
-        badge['badge_image_url'] = file_path
+    #if badge_image_url:
+    #    filename = badge_image_url.filename
+    #   file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    #    badge_image_url.save(file_path)
 
     badge['badge_name'] = badge_name
     badge['badge_desc'] = badge_desc
+    badge['badge_image_url'] = badge_image_url
+
 
     Badgelist.update_one({'num': num}, {'$set': badge})
 

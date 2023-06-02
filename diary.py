@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from user_badge import update_attendance
 
+##
 #--------------------------------------------------------------------------------------------------------------------#
 client = MongoClient("mongodb://localhost:27017/hyeyeon?retryWrites=true&w=majority")
 db = client.capstone_design

@@ -73,12 +73,23 @@ def login_user():
 
 
 
-@User_bp.route('/', methods=['GET']) # 이건 회원 정보 볼 수 있게
-def get_info_posts():
-    cursor = Users.find({})
-    posts = list(cursor)
-        
-    return dumps(posts)
+@User_bp.route('/<userid>', methods=['POST']) # 이건 회원 정보 볼 수 있게
+def get_info_posts(userid):
+    user = Users.find_one({'user_id': userid})
+
+    if user:
+        response = {
+            'user_id': user['user_id'],  # 수정: 'userid' -> 'user_id'
+            'password': user['password'],
+            'name': user['name'],
+            'nickname': user['nickname'],
+            'trainer': user['trainer']
+        }
+
+    else:
+        response = {}
+
+    return jsonify(response)
 
 
 # 회원정보 / 트레이너 여부 수정, 업데이트 하는 코드

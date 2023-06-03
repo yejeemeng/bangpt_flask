@@ -1,12 +1,12 @@
 from flask import Flask, jsonify, request
 from datetime import datetime
-from flask_pymongo import PyMongo
+# from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from flask import Blueprint
 
 #얘도 아직 미완성...
 #--------------------------------------------------------------------------------------------------------------------#
-client = MongoClient("mongodb://localhost:27017/hyeyeon?retryWrites=true&w=majority")
+client = MongoClient("mongodb://localhost:27017/")
 db = client.capstone_design
 User_Badges = db['user_badge'] # 유저의 배지 관리 
 Badge = db['badges'] # 배지 리스트

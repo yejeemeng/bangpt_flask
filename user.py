@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 
 #--------------------------------------------------------------------------------------------------------------------#
-client = MongoClient("mongodb://localhost:27017/hyeyeon?retryWrites=true&w=majority")
+client = MongoClient("mongodb://localhost:27017/")
 db = client.capstone_design
 Users = db['user'] # 유저 정보 관리하는 컬렉션
 User_Badges = db['user_badge'] # 유저의 배지 관리 

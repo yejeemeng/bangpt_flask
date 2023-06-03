@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from user import User_bp
 from participants import Participants_bp
 from diary import Diary_bp
+from trainers import Trainers_bp
 from Community.freepost import FreePost_bp
 from Community.infopost import InfoPost_bp
 from Community.questionpost import QuestionPost_bp
@@ -21,9 +22,13 @@ client = MongoClient(app.config['MONGO_URI'])
 db = client.capstone_design
 # --------------------------------------------------------------------------------------------------------------------#
 
+UPLOAD_FOLDER = '/Users/estar-kim/Desktop/2023/mju/캡스톤디자인/flask/practice6/static/assets/img/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 app.register_blueprint(User_bp, url_prefix='/user')
 app.register_blueprint(Participants_bp, url_prefix='/participants')
 app.register_blueprint(Diary_bp, url_prefix='/diary')
+app.register_blueprint(Trainers_bp, url_prefix='/trainers')
 
 app.register_blueprint(FreePost_bp, url_prefix='/freepost')
 app.register_blueprint(FreeComment_bp, url_prefix='/freecomment')

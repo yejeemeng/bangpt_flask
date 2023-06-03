@@ -29,3 +29,13 @@ def new_diary():
     response = {'success': True}
 
     return jsonify(response)
+
+@Diary_bp.route('/get/<diary_id>/<diary_date>', methods=['GET']) # 해당일의 운동 다이어리 읽어들이기
+def get_diary(diary_id, diary_date):
+
+    cursor = Diary.find({"diary_id": diary_id, "diary_date": diary_date})
+    print(diary_id)
+    print(diary_date)
+
+    memos = list(cursor)
+    return dumps(memos)

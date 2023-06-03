@@ -12,16 +12,19 @@ from badge import Badge_bp
 from mywrite import MyWriting_bp
 from diary import Diary_bp
 from user_badge import User_Badge_bp
-
+from trainer import Trainers_bp
+from flask_cors import CORS
 
 # --------------------------------------- mongoDB : capstone_design 연결----------------------------------------------#
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/' 
 client = MongoClient(app.config['MONGO_URI'])
 db = client.capstone_design
+app.config.from_object(__name__)
 # --------------------------------------------------------------------------------------------------------------------#
-UPLOAD_FOLDER = r'C:\Users\admin\Desktop\rhkwp20231\cd\badgeimage'
+UPLOAD_FOLDER = 'C:\\Users\\admin\\Desktop\\rhkwp20231\\cd\\badgeimage'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+CORS(app)
 
 app.register_blueprint(User_bp, url_prefix='/user')
 app.register_blueprint(FreePost_bp, url_prefix='/freepost')
@@ -35,7 +38,7 @@ app.register_blueprint(Badge_bp, url_prefix='/badge')
 app.register_blueprint(User_Badge_bp, url_prefix='/userbadge')
 app.register_blueprint(Advertisement_bp, url_prefix='/advertisement')
 app.register_blueprint(MyWriting_bp, url_prefix='/mywriting')
-
+app.register_blueprint(Trainers_bp, url_prefix='/trainers')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=821, debug=True)

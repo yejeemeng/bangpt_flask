@@ -56,7 +56,7 @@ def update_badge(num):
     # 업로드된 파일 저장
     #if badge_image_url:
     #    filename = badge_image_url.filename
-    #   file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    #    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     #    badge_image_url.save(file_path)
 
     badge['badge_name'] = badge_name

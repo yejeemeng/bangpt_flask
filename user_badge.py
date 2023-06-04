@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request
 from datetime import datetime
-from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from flask import Blueprint
 
@@ -12,6 +11,7 @@ User_Badges = db['user_badge'] # 유저의 배지 관리
 Badge = db['badges'] # 배지 리스트
 Attendance = db['attendance'] # 출석률 확인 컬렉션
 Diary = db['diary'] # 다이어리 콜렉션
+Exercise_result = db['exercise_result'] # 유저 운동 결과 정보 관리하는 컬렉션
 User_Badge_bp = Blueprint('user_badge', __name__)
 #--------------------------------------------------------------------------------------------------------------------#
 
@@ -115,9 +115,20 @@ def save_attendance(user_id):
                             'badges': [user_badge]
                         }
                         User_Badges.insert_one(user_document)
-                        
-        # 출석률이 30일을 넘었을 때 배지 2 추가..이거 나중에 수정
-        if attendance >= 9:
+                    
+
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False})
+    
+    
+# 배지 3~5번 (운동 결과 도큐먼트 추가할 때 이 함수 호출해야됨)
+def user_exercise (user_id) :
+    try:
+        exercise = Exercise_result.count_documents({'user_id': user_id}) # user exercise result의 개수 계산
+    
+        # 운동 처음 마치고 나면 !!! 
+        if exercise >= 1:
             badge3 = Badge.find_one({'num': 3})
             if badge3:
                 # 중복 체크
@@ -142,9 +153,60 @@ def save_attendance(user_id):
                             'badges': [user_badge]
                         }
                         User_Badges.insert_one(user_document)
+                        
+        if exercise >= 20:
+            badge3 = Badge.find_one({'num': 4})
+            if badge3:
+                # 중복 체크
+                existing_badge = User_Badges.find_one({'user_id': user_id, 'badges.badge_num': badge3['num']})
+                if not existing_badge:
+                    user_badge = {
+                        'badge_num': badge3['num'],
+                        'badge_name': badge3['badge_name'],
+                        'badge_desc': badge3['badge_desc'],
+                        'badge_image_url' : badge3['badge_image_url'],
+                        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    }
+                    user_document = User_Badges.find_one({'user_id': user_id})
+                    if user_document:
+                        User_Badges.update_one(
+                            {'user_id': user_id},
+                            {'$push': {'badges': user_badge}}
+                        )
+                    else:
+                        user_document = {
+                            'user_id': user_id,
+                            'badges': [user_badge]
+                        }
+                        User_Badges.insert_one(user_document)
+                        
+        if exercise >= 100:
+            badge3 = Badge.find_one({'num': 5})
+            if badge3:
+                # 중복 체크
+                existing_badge = User_Badges.find_one({'user_id': user_id, 'badges.badge_num': badge3['num']})
+                if not existing_badge:
+                    user_badge = {
+                        'badge_num': badge3['num'],
+                        'badge_name': badge3['badge_name'],
+                        'badge_desc': badge3['badge_desc'],
+                        'badge_image_url' : badge3['badge_image_url'],
+                        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    }
+                    user_document = User_Badges.find_one({'user_id': user_id})
+                    if user_document:
+                        User_Badges.update_one(
+                            {'user_id': user_id},
+                            {'$push': {'badges': user_badge}}
+                        )
+                    else:
+                        user_document = {
+                            'user_id': user_id,
+                            'badges': [user_badge]
+                        }
+                        User_Badges.insert_one(user_document)
 
-        return jsonify({'success' : True})
-
+    
     except Exception as e:
         print(e)
         return jsonify({'success': False})

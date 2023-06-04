@@ -5,7 +5,7 @@ from bson.json_util import dumps
 from bson import ObjectId
 
 #--------------------------------------------------------------------------------------------------------------------#
-client = MongoClient("mongodb://localhost:27017/hyeyeon?retryWrites=true&w=majority")
+client = MongoClient("mongodb://localhost:27017/")
 db = client.capstone_design
 FreePosts = db['freeposts'] # 자유 게시판
 FreeComments = db['freecomments'] # 자유 게시판 댓글

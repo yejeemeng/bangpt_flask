@@ -1,6 +1,5 @@
 from flask import Flask
 from pymongo import MongoClient
-from model import Model_bp
 from user import User_bp
 from participants import Participants_bp
 from diary import Diary_bp
@@ -10,7 +9,7 @@ from Community.infopost import InfoPost_bp
 from Community.questionpost import QuestionPost_bp
 from Community.freecomment import FreeComment_bp
 from Community.infocomment import InfoComment_bp
-from Community.qeustioncomment import QuestionComment_bp
+from Community.questioncomment import QuestionComment_bp
 from advertisement import Advertisement_bp
 from badge import Badge_bp
 from mywrite import MyWriting_bp
@@ -19,6 +18,7 @@ from diary import Diary_bp
 # (추가)
 from user_badge import User_Badge_bp
 from videoUpload import VideoUpload_bp
+from model import Model_bp
 
 # --------------------------------------- mongoDB : capstone_design 연결----------------------------------------------#
 app = Flask(__name__)

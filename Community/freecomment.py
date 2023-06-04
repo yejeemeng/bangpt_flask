@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 
 #--------------------------------------------------------------------------------------------------------------------#
-client = MongoClient("mongodb://localhost:27017/hyeyeon?retryWrites=true&w=majority")
+client = MongoClient("mongodb://localhost:27017/")
 db = client.capstone_design
 FreeComments = db['freecomments'] # 자유 게시판
 FreeComment_bp = Blueprint('free_comment', __name__)

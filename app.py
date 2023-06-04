@@ -13,6 +13,7 @@ from mywrite import MyWriting_bp
 from diary import Diary_bp
 from user_badge import User_Badge_bp
 from trainer import Trainers_bp
+from result import Exercise_result_bp
 from flask_cors import CORS
 
 # --------------------------------------- mongoDB : capstone_design 연결----------------------------------------------#
@@ -39,6 +40,7 @@ app.register_blueprint(User_Badge_bp, url_prefix='/userbadge')
 app.register_blueprint(Advertisement_bp, url_prefix='/advertisement')
 app.register_blueprint(MyWriting_bp, url_prefix='/mywriting')
 app.register_blueprint(Trainers_bp, url_prefix='/trainers')
+app.register_blueprint(Exercise_result_bp, url_prefix='/exercise_result')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=821, debug=True)
